@@ -1,4 +1,4 @@
-# Transformer Implementation From Scratch
+# GPT Implementation From Scratch
 
 A simple, beginner-friendly implementation of Transformers built from the ground up. It focuses on the core concepts of Transformers, simplifying and abstracting away extra code related to data preparation and training. Surprisingly, this code is quite effective- I could create a model on par with GPT2 for a training cost of less than $200 on Lambda Labs.
 
