@@ -2,7 +2,6 @@ from time import time
 import argparse
 
 from datasets import load_dataset, DatasetDict
-from sklearn.model_selection import train_test_split
 from transformers import AutoTokenizer, DataCollatorForLanguageModeling
 from transformers import AutoTokenizer, Trainer, TrainingArguments
 import torch
@@ -29,6 +28,7 @@ DEFAULT_CONFIG = {
     "logging_dir": './logs',
     "logging_steps": 500,
     "save_steps": 10000,
+    "eval_steps": 10000,
     "gradient_accumulation_steps": 1,
     
     # Data parameters
@@ -43,11 +43,13 @@ def load_and_split_dataset(tokenizer, seq_len, split_ratio=0.1, dataset_percent=
 
     split = f'train[:{dataset_percent}%]' if dataset_percent is not None else 'train'
     dataset = load_dataset("openwebtext", split=split)    
-    # Tokenize the dataset. For full dataset, takes ~30 mins the first time
+    # Tokenize the dataset. For full dataset, takes ~30 mins the tokenized first time
     tokenized_dataset = dataset.map(
-        tokenize_function, batched=True, batch_size=100000, remove_columns=['text'])
+        tokenize_function, batched=True, batch_size=100000,
+        remove_columns=['text'])
+    tokenized_dataset = tokenized_dataset.remove_columns("attention_mask")
     
-    print(f"Full tokenized dataset: {tokenized_dataset}")    
+    print(f"Tokenized dataset: {tokenized_dataset}")
     print("\nSplitting dataset into train/eval ...") # for full dataset, takes ~5 mins the first time
     
     train_test_split = tokenized_dataset.train_test_split(test_size=split_ratio, seed=42)
@@ -107,6 +109,10 @@ def run(config):
         logging_steps=config["logging_steps"],
         save_steps=config["save_steps"],
         gradient_accumulation_steps=config["gradient_accumulation_steps"],
+        evaluation_strategy="steps",
+        eval_steps=config["eval_steps"],
+        do_train=True,
+        do_eval=True
     )
 
     # Initialize Trainer
@@ -119,13 +125,15 @@ def run(config):
     )
     trainer.train()
 
-    model.save_pretrained(config["output_dir"])
-
 
 def parse_args(default_config):
     parser = argparse.ArgumentParser(description='Train a Transformer model from scratch')
     for key, value in default_config.items():
-        parser.add_argument(f'--{key}', type=type(value), default=value)
+        parser.add_argument(
+            f'--{key}',
+            type=type(value) if value is not None else None,
+            default=value
+        )
     return parser.parse_args()
 
 

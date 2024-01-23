@@ -24,7 +24,7 @@ pip install -r requirements
 ```
 
 ### Usage: training on OpenWebText (GPT2)
-
+   
 ```
 python gpt_trainer.py   # run on full data
 python gpt_trainer.py --dataset_percent=1  # run on 1 % of the data
