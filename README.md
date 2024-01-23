@@ -2,6 +2,9 @@
 
 A simple, beginner-friendly implementation of Transformers built from the ground up. It focuses on the core concepts of Transformers, simplifying and abstracting away extra code related to data preparation and training. Surprisingly, this code is quite effective- I could create a model on par with GPT2 for a training cost of less than $200 on Lambda Labs.
 
+![image](https://github.com/ratish-dalvi/transformers-from-scratch/assets/23067516/bb82a061-d144-4754-a011-447dbaf5660e)
+
+<br>
 
 _There are so many implementations of Transformers? What makes this one special?_
 
