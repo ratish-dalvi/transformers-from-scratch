@@ -2,9 +2,9 @@
 
 A simple, beginner-friendly implementation of Transformers built from the ground up. It focuses on the core concepts of Transformers, simplifying and abstracting away extra code related to data preparation and training. Surprisingly, this code is quite effective- I could create a model on par with GPT2 for a training cost of less than $200 on Lambda Labs.
 
-![image](https://github.com/ratish-dalvi/transformers-from-scratch/assets/23067516/bb82a061-d144-4754-a011-447dbaf5660e)
+![image](https://github.com/ratish-dalvi/transformers-from-scratch/assets/23067516/d9e4d578-d7f9-4398-93db-69c665d4c479)
 
-*Figure shows the eval loss of a ~160m parameter model. Model was still training at the time this screenshot was taken, but eval-loss was at gpt2 (124m) level and the usage bill was at ~$200. The model converged at 2.84.* 
+*Figure shows the eval loss of a ~160m parameter model. Model was still training at the time this screenshot was taken, but eval-loss (2.84) was at gpt2 124m level*
 
 
 <br>
